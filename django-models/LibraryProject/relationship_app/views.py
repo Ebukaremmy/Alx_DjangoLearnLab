@@ -7,18 +7,18 @@ from django.contrib.auth.decorators import user_passes_test
 from .models import Book
 from .models import Library
 
-# Task 1: Function-based view
+# Task 1: Function-based View (Strictly uses Book.objects.all())
 def list_books(request):
-    books = Book.objects.all()  # Checker looks for this exact string
+    books = Book.objects.all()
     return render(request, 'relationship_app/list_books.html', {'books': books})
 
-# Task 1: Class-based view
+# Task 1: Class-based View
 class LibraryDetailView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
-# Task 2: Registration
+# Task 2: User Registration
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -30,7 +30,7 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
 
-# Task 3: Role-based views
+# Task 3: Role-based Access Views
 def is_admin(user):
     return user.is_authenticated and user.userprofile.role == 'Admin'
 
@@ -52,7 +52,7 @@ def librarian_view(request):
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')
 
-# Task 4: Permission-based views
+# Task 4: Permissions-based Views
 @permission_required('relationship_app.can_add_book')
 def add_book(request):
     return render(request, 'relationship_app/add_book.html')
