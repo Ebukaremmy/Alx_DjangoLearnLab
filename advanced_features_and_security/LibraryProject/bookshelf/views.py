@@ -1,14 +1,15 @@
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.decorators import permission_required
-from .models import Book
+from django.shortcuts import render
+from .forms import ExampleForm
 
-@permission_required('bookshelf.can_view', raise_exception=True)
-def book_list(request):
-    books = Book.objects.all()
-    return render(request, 'bookshelf/book_list.html', {'books': books})
+# ... Keep your existing can_view/can_edit views here ...
 
-@permission_required('bookshelf.can_edit', raise_exception=True)
-def edit_book(request, pk):
-    book = get_object_or_404(Book, pk=pk)
-    # Logic for editing...
-    return render(request, 'bookshelf/form_example.html', {'book': book})
+def example_view(request):
+    if request.method == 'POST':
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            # Data is sanitized by the form class
+            title = form.cleaned_data['title']
+            # Process safely...
+    else:
+        form = ExampleForm()
+    return render(request, 'bookshelf/form_example.html', {'form': form})
