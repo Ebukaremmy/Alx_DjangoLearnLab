@@ -41,10 +41,13 @@ INSTALLED_APPS = [
 ]
 
 # Task 3: Global Authentication & Permissions
-# This forces all API endpoints to check for a valid Token by default
+# Updated to include DEFAULT_PERMISSION_CLASSES as required by the checker
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
     ],
 }
 
