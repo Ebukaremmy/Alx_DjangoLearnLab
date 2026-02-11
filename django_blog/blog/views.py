@@ -111,3 +111,18 @@ class SearchResultsView(ListView):
                 Q(tags__name__icontains=query)
             ).distinct()
         return Post.objects.none()
+        from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+# If you have a custom UserUpdateForm, import it, otherwise use a basic one
+
+def register(request):
+    # Your existing register logic here
+    pass
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        # Logic for updating user information
+        # Example: u_form = UserUpdateForm(request.POST, instance=request.user)
+        pass
+    return render(request, 'blog/profile.html')
