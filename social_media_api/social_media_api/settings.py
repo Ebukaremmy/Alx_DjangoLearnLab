@@ -1,12 +1,17 @@
 from pathlib import Path
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-m*(eegx&008z%1h$b%5=wa6szd&vn!flc#+*inm@wv41u^%75w'
 
-DEBUG = True
+# --- PRODUCTION SETTINGS ---
+# Requirement: Must be False
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# Requirement: Configure ALLOWED_HOSTS for production
+ALLOWED_HOSTS = ['*'] 
 
 # Application definition
 
@@ -18,11 +23,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    # 1. Add Third-party apps
+    # Third-party apps
     'rest_framework',
-    'rest_framework.authtoken', # For Token-based authentication
+    'rest_framework.authtoken',
     
-    # 2. Add your local apps
+    # Local apps
     'accounts',
     'posts',
     'notifications',
@@ -57,6 +62,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'social_media_api.wsgi.application'
 
+# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -64,6 +70,7 @@ DATABASES = {
     }
 }
 
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -71,18 +78,21 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+# Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
+# Static files
 STATIC_URL = 'static/'
 
-# 3. Add Custom User Model (Mandatory for Task 1)
-# This tells Django to use your accounts.CustomUser instead of the default User
+# --- CUSTOM CONFIGURATIONS ---
+
+# Custom User Model
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-# 4. Optional: Configure REST Framework defaults
+# REST Framework configurations
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
@@ -91,5 +101,12 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
 }
+
+# --- SECURITY SETTINGS FOR TASK 4 ---
+# Requirement: Configure security settings for production
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_SSL_REDIRECT = True 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
