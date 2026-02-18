@@ -112,3 +112,12 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = True 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# --- STATIC FILES CONFIGURATION FOR PRODUCTION ---
+# Requirement: social_media_api/settings.py must contain ["STATIC_ROOT"]
+STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles' # This is the missing line
+
+# Optional but good practice for media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
